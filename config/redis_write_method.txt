@@ -1,0 +1,17 @@
+    public static void write${NAME1}(byte[] key, ${NAME1} info)
+    {
+        if (info == null || info.getOp() == DataOption.NONE)
+            return;
+      
+        try
+        {
+            ${NAME2}.Builder builder = ${NAME2}.newBuilder();
+${TEMP1}
+      
+            PlayerCacheMgr.set(key, builder.build().toByteArray());
+        }
+        catch (Exception e)
+        {
+            LOGGER.error("{}", new String(key), e);
+        }
+    }

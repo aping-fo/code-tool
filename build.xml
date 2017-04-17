@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="DaoCodeTool" default="build" basedir=".">
+	<property name="srcDir" location="src" />
+	<property name="binDir" location="build/bin" />
+	<property name="jarFile" location="DaoCodeTool.jar" />
+	<property name="libDir" value="lib" />
+	<path id="libPath">
+		<fileset dir="${libDir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+	<!-- <property name="dep_cp" value="${toString:libPath}" /> -->
+	<echo message="Build Classpath: ${toString:libPath}" />
+	<echo message="Manifest Classpath: ${manifestPath}" />
+	<target name="Init">
+		<delete dir="${binDir}" />
+		<mkdir dir="${binDir}" />
+	</target>
+	<target name="Compile" depends="Init">
+		<javac encoding="utf-8" includeAntRuntime="false" srcdir="${srcDir}" destdir="${binDir}">
+			<classpath refid="libPath" />
+		</javac>
+	</target>
+	<target name="MakeJar_32" depends="Init,Compile">
+		<!--<manifestclasspath property="manifestPath" jarfile="$DaoCodeTool_32.jar">
+			<classpath refid="libPath" />
+		</manifestclasspath>-->
+		<jar destfile="DaoCodeTool_32.jar" basedir="${binDir}">
+			<manifest>
+				<attribute name="Class-Path" value="lib/mysql-connector-java-5.1.20-bin.jar lib/swt_32.jar" />
+				<attribute name="main-class" value="com.road.tool.CodeTool" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="MakeJar_64" depends="Init,Compile">
+		<jar destfile="DaoCodeTool_64.jar" basedir="${binDir}">
+			<manifest>
+				<attribute name="Class-Path" value="lib/mysql-connector-java-5.1.20-bin.jar lib/swt_64.jar" />
+				<attribute name="main-class" value="com.road.tool.CodeTool" />
+			</manifest>
+		</jar>
+	</target>
+	<target name="Delete" depends="Init,Compile,MakeJar_32">
+		<delete dir="${binDir}" quiet="true" />
+	</target>
+	<target name="build_32" depends="Init,Compile,MakeJar_32">
+	</target>
+	<target name="build_64" depends="Init,Compile,MakeJar_64">
+	</target>
+	<target name="build" depends="build_32, build_64, Delete">
+	</target>
+</project>

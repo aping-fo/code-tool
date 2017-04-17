@@ -1,0 +1,18 @@
+package com.road.ddt.redisdao;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.road.ddt.entity.${NAME1};
+import com.road.ddt.gen.RedisData.${NAME2};
+import com.road.pitaya.database.DataOption;
+import com.road.pitaya.redis.PlayerCacheMgr;
+${TIMEUTIL}
+
+public final class Redis${NAME1}Dao
+{
+    private static final Logger LOGGER = LoggerFactory.getLogger(Redis${NAME1}Dao.class);
+
+${READ_METHOD};
+${WRITE_METHOD};
+}
